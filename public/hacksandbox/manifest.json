@@ -1,0 +1,9 @@
+{
+  "version": "0.6.0",
+  "archive": "hacksandbox-selfhost.tar.gz",
+  "sha256": "cb6695ee31a736a04aa26f432fae37fc553d32a6dcffd3b5028d601706f27005",
+  "execution": "rootless-docker-required",
+  "zkProof": "not_configured",
+  "platform": "local-participant-host",
+  "license": "MIT"
+}

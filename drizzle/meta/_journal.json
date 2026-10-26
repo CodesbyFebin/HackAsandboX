@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1792932998885,
+      "tag": "0000_lyrical_madripoor",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1792947812274,
+      "tag": "0001_panoramic_hitman",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1792949067510,
+      "tag": "0002_old_giant_girl",
+      "breakpoints": true
+    }
+  ]
+}

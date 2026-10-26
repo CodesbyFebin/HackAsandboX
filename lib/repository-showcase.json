@@ -1,0 +1,54 @@
+[
+  {
+    "repo": "CodesbyFebin/open-career-ops",
+    "url": "https://github.com/CodesbyFebin/open-career-ops",
+    "description": "Open-source AI job search agent and job finder: scan job boards, score each job 1-5 against your CV before you apply, tailor an ATS-friendly resume and cover letter, get interview prep and a job application tracker. It helps you fill in each application; you press Submit. Runs locally in your AI coding CLI (Claude Code, Codex, OpenCode and more).",
+    "upstream": "career-ops-hq/career-ops",
+    "upstreamUrl": "https://github.com/career-ops-hq/career-ops",
+    "upstreamStars": 77500,
+    "license": "MIT",
+    "fork": true,
+    "checkedAt": "2026-10-26",
+    "popularityBasis": "Upstream star count snapshot; GitHub Trending position not measured",
+    "qualification": "Reference only; upstream code has not been executed or security-qualified."
+  },
+  {
+    "repo": "CodesbyFebin/hypit",
+    "url": "https://github.com/CodesbyFebin/hypit",
+    "description": "AI-assisted video workflow reference. Review licensing, consent and source rights before use.",
+    "upstream": "hypit-ai/hypit",
+    "upstreamUrl": "https://github.com/hypit-ai/hypit",
+    "upstreamStars": 25817,
+    "license": "NOASSERTION",
+    "fork": true,
+    "checkedAt": "2026-10-26",
+    "popularityBasis": "Upstream star count snapshot; GitHub Trending position not measured",
+    "qualification": "Reference only; upstream code has not been executed or security-qualified."
+  },
+  {
+    "repo": "CodesbyFebin/awesome-zkvm",
+    "url": "https://github.com/CodesbyFebin/awesome-zkvm",
+    "description": "A curated list of zkVM, zero-knowledge virtual machine",
+    "upstream": "rkdud007/awesome-zkvm",
+    "upstreamUrl": "https://github.com/rkdud007/awesome-zkvm",
+    "upstreamStars": 331,
+    "license": "MIT",
+    "fork": true,
+    "checkedAt": "2026-10-26",
+    "popularityBasis": "Upstream star count snapshot; GitHub Trending position not measured",
+    "qualification": "Reference only; upstream code has not been executed or security-qualified."
+  },
+  {
+    "repo": "CodesbyFebin/rpc-core",
+    "url": "https://github.com/CodesbyFebin/rpc-core",
+    "description": "Multiplatform JSON RPC Library using Kotlin Serialization",
+    "upstream": "solana-mobile/rpc-core",
+    "upstreamUrl": "https://github.com/solana-mobile/rpc-core",
+    "upstreamStars": 6,
+    "license": "Apache-2.0",
+    "fork": true,
+    "checkedAt": "2026-10-26",
+    "popularityBasis": "Upstream star count snapshot; GitHub Trending position not measured",
+    "qualification": "Reference only; upstream code has not been executed or security-qualified."
+  }
+]

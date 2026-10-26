@@ -1,0 +1,9 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';
+import {parseHackathonFeed,canonicalUrl} from '../lib/sync-core.ts';
+const item=(title,link,desc)=>`<item><title>${title}</title><link>${link}</link><description>${desc}</description></item>`;
+const feed=x=>`<rss><channel>${x}</channel></rss>`;
+test('feed preserves provenance and eligibility uncertainty',()=>{const data=parseHackathonFeed(feed(item('Build','https://brabble.ai/s/1','Host · via Devpost - Registration closes Thu, 12 Nov 2026 20:00:00 GMT - Prize: $500 - Online')),Date.parse('2026-10-25'));assert.equal(data[0].deadline,'2026-11-12T20:00:00.000Z');assert.equal(data[0].source,'Brabble.ai');assert.match(data[0].eligibility,/Not verified/);assert.equal(data[0].format,'Online')});
+test('RSS publication timestamps are not assumed to be event deadlines',()=>{const data=parseHackathonFeed(feed('<item><title>Build</title><link>https://example.com/e</link><pubDate>Thu, 12 Nov 2026 20:00:00 GMT</pubDate></item>'));assert.equal(data[0].deadline,null)});
+test('expired registration listings are filtered',()=>assert.equal(parseHackathonFeed(feed(item('Old','https://example.com/e','Registration closes Thu, 12 Nov 2020 20:00:00 GMT - Online'))).length,0));
+test('deduplication removes tracking parameters and fragments',()=>{assert.equal(canonicalUrl('https://example.com/e?utm_source=x#test'),'https://example.com/e');assert.equal(parseHackathonFeed(feed(item('A','https://example.com/e','')+item('B','https://example.com/e#x',''))).length,1)});
+test('feed rejects entities, unsafe links and oversized input',()=>{assert.throws(()=>parseHackathonFeed('<!DOCTYPE x><rss/>'));assert.throws(()=>parseHackathonFeed('x'.repeat(2000001)));assert.equal(parseHackathonFeed(feed(item('No','javascript:alert(1)',''))).length,0)});

@@ -1,0 +1,15 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {validateBody} from '../lib/validation.ts';
+const project={name:'Useful tool',files:{'index.html':'<h1>Hello</h1>'},repo:'https://github.com/example/repo'};
+test('project accepts a valid HTTPS source reference',()=>assert.equal(validateBody('project',project).success,true));
+test('repository references reject executable schemes',()=>assert.equal(validateBody('project',{...project,repo:'javascript:alert(1)'}).success,false));
+test('repository references reject embedded credentials',()=>assert.equal(validateBody('project',{...project,repo:'https://secret@github.com/x/y'}).success,false));
+test('file traversal is rejected',()=>assert.equal(validateBody('project',{...project,files:{'../../secret':'x'}}).success,false));
+test('absolute file paths are rejected',()=>assert.equal(validateBody('project',{...project,files:{'/etc/passwd':'x'}}).success,false));
+test('oversized files are rejected',()=>assert.equal(validateBody('project',{...project,files:{'a':'x'.repeat(150001)}}).success,false));
+test('file count is bounded',()=>assert.equal(validateBody('project',{...project,files:Object.fromEntries(Array.from({length:31},(_,i)=>[String(i),'x']))}).success,false));
+test('untrusted reservation status is stripped',()=>{const r=validateBody('reservation',{name:'Example',status:'running',provider:'paid'});assert.equal(r.success,true);assert.deepEqual(r.data,{name:'Example'})});
+test('showcase rejects object content',()=>assert.equal(validateBody('showcase',{name:'Example',projectId:'x',description:{html:'x'}}).success,false));
+test('event end must follow start',()=>assert.equal(validateBody('event',{name:'Event',org:'Host',description:'Build',url:'https://example.com',start:'2026-12-01',end:'2026-11-01',format:'Online',category:'AI / ML',eligibility:'Adults'}).success,false));
+test('unknown record types are rejected',()=>assert.equal(validateBody('admin',{}).success,false));

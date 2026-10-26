@@ -1,0 +1,132 @@
+[
+  {
+    "repo": "kriasoft/graphql-starter-kit",
+    "name": "kriasoft/graphql-starter-kit",
+    "branch": "main",
+    "size": 154215,
+    "license": "MIT",
+    "description": "💥  Monorepo template (seed project) pre-configured with GraphQL API, PostgreSQL, React, and Joy UI.",
+    "archived": false,
+    "error": false
+  },
+  {
+    "repo": "Olanetsoft/awesome-hackathon-projects",
+    "name": "Olanetsoft/awesome-hackathon-projects",
+    "branch": "main",
+    "size": 142,
+    "license": "MIT",
+    "description": "This is a curated list of amazing hackathon projects",
+    "archived": false,
+    "error": false
+  },
+  {
+    "repo": "unicodeveloper/laravel-hackathon-starter",
+    "name": "unicodeveloper/laravel-hackathon-starter",
+    "branch": "master",
+    "size": 268,
+    "license": "MIT",
+    "description": ":computer: :octocat: A hackathon/MVP boilerplate for laravel web applications. Start your hackathons without hassle.",
+    "archived": false,
+    "error": false
+  },
+  {
+    "repo": "GoogleCloudPlatform/hackathon-toolkit",
+    "name": "GoogleCloudPlatform/hackathon-toolkit",
+    "branch": "master",
+    "size": 13278,
+    "license": "Apache-2.0",
+    "description": "GCP Hackathon Toolkit",
+    "archived": false,
+    "error": false
+  },
+  {
+    "repo": "techx/quill",
+    "name": "techx/quill",
+    "branch": "master",
+    "size": 12136,
+    "license": "AGPL-3.0",
+    "description": "📝 Registration, for hackathons!",
+    "archived": false,
+    "error": false
+  },
+  {
+    "repo": "Lorenalgm/hackathon-dicas",
+    "name": "Lorenalgm/hackathon-dicas",
+    "branch": "master",
+    "size": 175,
+    "license": null,
+    "description": "Dicas de ferramentas e conteúdos para utilizar em um hackathon :)",
+    "archived": false,
+    "error": false
+  },
+  {
+    "repo": "github/hackathons",
+    "name": "github/hackathons",
+    "branch": "main",
+    "size": 2639,
+    "license": "CC0-1.0",
+    "description": "Deprecated. See https://github.com/github/devrel/issues/2874#issuecomment-3483164290. Tips, Tricks, and Resources for running your hackathon.",
+    "archived": true,
+    "error": false
+  },
+  {
+    "repo": "nerdeveloper/hackathon-starter-kit",
+    "name": "nerdeveloper/hackathon-starter-kit",
+    "branch": "master",
+    "size": 4959,
+    "license": "MIT",
+    "description": "A Node-Typescript/Express Boilerplate with Authentication(Local, Github, Facebook, Twitter, Google, Dropbox, LinkedIn, Discord, Slack), Authorization, and CRUD functionality + PWA Support!",
+    "archived": false,
+    "error": false
+  },
+  {
+    "repo": "terrakok/kmp-web-wizard",
+    "name": "terrakok/kmp-web-wizard",
+    "branch": "master",
+    "size": 42771,
+    "license": "MIT",
+    "description": "Wizard for Kotlin Multiplatform",
+    "archived": false,
+    "error": false
+  },
+  {
+    "repo": "dribdat/awesome-hackathon",
+    "name": "dribdat/awesome-hackathon",
+    "branch": "main",
+    "size": 187,
+    "license": "CC0-1.0",
+    "description": "Platforms, tools, and guides for critical organizers 🌆",
+    "archived": false,
+    "error": false
+  },
+  {
+    "repo": "lnxpy/hey",
+    "name": "lnxpy/hey",
+    "branch": "main",
+    "size": 202,
+    "license": "MIT",
+    "description": "💬 AI-Powered Pair Programming Friend!",
+    "archived": false,
+    "error": false
+  },
+  {
+    "repo": "jetthoughts/vuejs-rails-starterkit",
+    "name": "jetthoughts/vuejs-rails-starterkit",
+    "branch": "master",
+    "size": 2151,
+    "license": "MIT",
+    "description": "Vue.js + Rails Starting Kit GitHub Template to develop Hybrid Mobile Application: https://vuejs-rails-starterkit.herokuapp.com",
+    "archived": false,
+    "error": false
+  },
+  {
+    "repo": "imRohan/Pantry",
+    "name": "imRohan/Pantry",
+    "branch": "master",
+    "size": 9401,
+    "license": "NOASSERTION",
+    "description": "🍊  Free data storage as a service. Pantry allows devs to store JSON for multiple apps & users. A good resource when building personal projects, apps for hackathons, and prototypes alike.",
+    "archived": false,
+    "error": false
+  }
+]
