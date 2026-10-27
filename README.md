@@ -2,7 +2,7 @@
 
 **Find a challenge. Bring your repository. Build something useful.**
 
-Hackathon discovery, attributed developer feeds, browser-local tools and a self-hosted participant workbench by [CodesbyFebin](https://github.com/CodesbyFebin).
+A futuristic builder launchpad, 17 attributed MLH sponsor categories, developer feeds, browser-local tools and a self-hosted participant workbench by [CodesbyFebin](https://github.com/CodesbyFebin).
 
 [Public website](https://codesbyfebin.github.io/HackAsandboX/) · [Documentation Wiki](https://github.com/CodesbyFebin/HackAsandboX/wiki) · [Security](SECURITY.md) · [Contributing](CONTRIBUTING.md)
 
@@ -10,7 +10,7 @@ Hackathon discovery, attributed developer feeds, browser-local tools and a self-
 
 | Component | Implementation |
 |---|---|
-| Public portal | Seven static routes, responsive accessible HTML, structured catalog and repository showcase |
+| Public portal | Eight static routes, responsive accessible HTML, structured catalog and repository showcase |
 | Developer tools | JSON/JSONL validation, SHA-256, UTF-8 Base64, URL cleanup, IST conversion and environment templates; browser-local |
 | Hackathon discovery | Curated catalog plus attributed RSS ingestion in the authenticated app; eligibility uncertainty preserved |
 | Fresh updates | Ten feed readers, six-hour authenticated refresh, retained snapshots on failures |
