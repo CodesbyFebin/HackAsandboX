@@ -49,3 +49,6 @@ hacksandbox/data/
 __pycache__/
 *.pyc
 /_site/
+
+# Sovereign OS local state and signing material
+/sovereign/data/
