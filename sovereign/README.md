@@ -15,10 +15,10 @@ This experimental service extends the existing hackathon portal with a private c
 | Approval | Implemented for evidence export only; exact manifest digest, five-minute expiry, single-use nonce |
 | Audit | Implemented; local hash chain, not an externally anchored transparency log |
 | OpenCode | Transport adapter implemented and fixture-tested; live model run not qualified |
-| Workspace execution | Existing rootless Docker kit; automatic Sovereign-to-Docker bridge planned |
+| Workspace execution | Background offline test worker implemented; rootless Docker live qualification pending |
 | Kubernetes | Offline Job planner and boundary manifest; not applied or cluster-tested |
-| MeTaBos, MetaPen | Planned adapters; no invoices, scans or deployments execute from this API |
-| WebLLM | Planned browser integration; no model assets downloaded by the console |
+| Business and source review | Local invoice/stock ledger and heuristic source review implemented; upstream MeTaBoss/MetaPen services not connected |
+| WebLLM | Browser adapter and local asset serving implemented; operator must supply mirrored runtime/weights |
 | Background inference | Existing local Ollama kit; not automatically connected to mission workers |
 | STARK zkVM | Not connected; every evidence bundle says `not_generated` |
 | PostgreSQL, OIDC, HA queue, object storage | Planned production migration |
@@ -67,9 +67,9 @@ The commit above illustrates the format; supply a real commit from your reposito
 | POST `/v1/tasks/:id/approve` | Operator; `{decision,manifestDigest}` |
 | POST `/v1/tasks/:id/export` | Operator; `{nonce,manifestDigest}` consumes approval |
 
-Outcomes are `succeeded` or `failed`. Finish artifacts are bounded UTF-8 contents, not arbitrary filesystem paths; their hashes are computed server-side. Raw contents are not retained by this service: archive them privately alongside the receipt. At most 20 unique artifacts and 500 KB total are accepted. No raw worker command API exists. Approval grants only `export-evidence`, never deployment or business mutation.
+Outcomes are `succeeded` or `failed`. Finish artifacts are bounded UTF-8 contents, not arbitrary filesystem paths; their hashes are computed server-side. Raw contents are now retained transactionally in the private SQLite database and included in approved exports. Treat database backups as sensitive. At most 20 unique artifacts and 500 KB total are accepted. No raw worker command API exists. Approval grants only `export-evidence`, never deployment or business mutation.
 
-A worker must prepare an isolated checkout at the exact commit, enforce allowed capabilities, deadlines and egress independently, invoke the agent, collect patch/test outputs, submit the result and terminate. Heartbeat or transport timeout is not a process kill: the executor must kill its process group or Job. Expired leases fail closed and are not automatically retried, to avoid duplicate side effects. The five-second expiry sweep is active in the service entry point.
+A worker must prepare an isolated checkout at the exact commit, enforce allowed capabilities, deadlines and egress independently, invoke the agent, collect patch/test outputs, submit the result and terminate. Heartbeat or transport timeout is not a process kill: the executor must kill its process group or Job. Expired leases fail closed and are not automatically retried, to avoid duplicate side effects. The five-second expiry sweep is active in the service entry point. Expired evidence-export approvals return to review, and operators can cancel pending missions. Legacy receipts from before artifact retention cannot recover their original contents; incomplete evidence exports now fail closed.
 
 ## OpenCode transport
 
@@ -108,7 +108,7 @@ Save the operator-approved export and securely provision the signing public key 
 node sovereign/verify.mjs evidence.json trusted-public-key.pem
 ```
 
-The verifier checks the manifest digest and Ed25519 signature against your trusted key. Independently recompute artifact SHA-256 values from the archived bytes to check artifact content. The signature attests what this control plane recorded from a credentialed worker, not that a command ran, a test passed, or a finding is correct. A compromised worker can lie. The local audit chain can detect inconsistent edits relative to a trusted checkpoint, but a host administrator can rewrite the entire chain. Store checkpoints externally for stronger tamper evidence.
+The verifier checks the manifest digest, Ed25519 signature and every included artifact byte count and SHA-256 against your trusted key. Missing, extra or altered artifacts fail verification. The signature attests what this control plane recorded from a credentialed worker, not that a command ran, a test passed, or a finding is correct. A compromised worker can lie. The local audit chain can detect inconsistent edits relative to a trusted checkpoint, but a host administrator can rewrite the entire chain. Store checkpoints externally for stronger tamper evidence.
 
 No SNARK/STARK proof is generated. A future proving adapter must identify an exact program digest, public inputs, verifier version and tested assertion. Hashing command output is not a proof of execution. Kata isolation and zkVM computation proofs are separate mechanisms.
 
@@ -116,7 +116,7 @@ No SNARK/STARK proof is generated. A future proving adapter must identify an exa
 
 Run under a supervised local service for restart, with a private durable volume. Back up the SQLite database with a consistent SQLite backup procedure and back up the signing key separately with restricted access. Test restore before relying on the service. Signing key rotation, multi-user authentication, encrypted artifact storage, PostgreSQL migration, monitoring, TLS ingress and disaster recovery remain qualification work. Do not run multiple service replicas against this SQLite file. Coordinate one service process per signing directory.
 
-13 new tests cover task validation, scope statements, persistence, lease fencing, concurrency, approval mismatch/expiry/replay, artifact validation, signature tampering, job boundaries, HTTP roles and the OpenCode transport fixture. Fixtures test contracts, not live providers or cluster execution. Existing portal and Python kit checks remain separate.
+27 Sovereign tests cover task validation, scope statements, persistence, lease fencing, concurrency, approval mismatch/expiry/replay, artifact validation, signature tampering, job boundaries, HTTP roles and the OpenCode transport fixture. Fixtures test contracts, not live providers or cluster execution. Existing portal and Python kit checks remain separate.
 
 ## Integration sequence
 
@@ -128,3 +128,35 @@ Run under a supervised local service for restart, with a private durable volume.
 6. Add an independently tested selective computation prover.
 
 Original code is covered by the repository MIT license. OpenCode, models and downstream tools retain their own licenses. This service does not bundle or rebrand their source.
+
+
+## Background offline worker
+
+`worker.mjs` connects the control service to bounded rootless Docker test runs. The operator provides a JSON mapping of repository identities to **trusted local Git mirrors** and a locally available digest-pinned Node image containing `/bin/sh`, `tar` and Node 24. No repository is cloned from a task-supplied URL. No image is pulled. Git symlinks and submodules are refused, source is capped at 500 files and a 6 MB archive, and only `node --test` executes. This worker supports coding tasks with the `test` capability, not arbitrary commands or AI edits.
+
+```sh
+export SOVEREIGN_REPOSITORIES=/private/operator/repositories.json
+export SOVEREIGN_IMAGE=internal/node-worker@sha256:REPLACE_WITH_VERIFIED_IMAGE_DIGEST
+# Same worker credential as the running control service, supplied through your secret manager.
+node sovereign/worker.mjs
+```
+
+Example repositories file: `{"owner/repository":"/private/git/repository"}`. Do not point it at an untrusted Git configuration or allow agent code to modify that mirror. Prepare dependencies in the reviewed image if tests need them. The worker renews its lease, observes an absolute timeout, removes the named container on completion or cancellation and records failure without retrying side effects. The container receives no control token, model key, Docker socket or network. A worker crash can still leave an orphan container; the task lease fences its result, but host supervision and a container reaper remain required. Rootless containers share a kernel and are not Kata microVMs. Docker and kubectl were absent from the validation environment, so live isolation is not claimed.
+
+## Business ledger and owned-source review
+
+The console now provides a local business slice independent of the upstream MeTaBoss repository: set stock, draft an invoice in integer INR minor units, approve the exact immutable payload hash, then commit it with a five-minute nonce. Stock availability is rechecked and all line deductions plus invoice commit happen in one SQLite transaction. Replay, stale approval and insufficient stock fail. Expired invoice approvals can be reset for fresh review. This is not a tax, payment, GST or external communications integration.
+
+Operator endpoints: GET `/v1/business`, POST `/v1/business/stock`, POST `/v1/business/invoices`, and POST `/v1/business/invoices/:id/{approve,commit,reset-approval}`. Draft body: `{customer,currency:"INR",lines:[{sku,quantity,unitPriceMinor}]}`. Approval takes `{payloadDigest}` from `payload_hash`; commit takes the returned approval nonce and digest. Credentials are installation-wide; production tenant separation is still unimplemented.
+
+POST `/v1/security/review` accepts `{authorization:"owned-source-review",files:{"app.js":"source text"}}`. It returns deterministic private-key-marker, dynamic-eval and shell-execution review hints with source digest, filename and line. It does not execute input, contact targets, reveal matched secret contents or establish an exploitable vulnerability. Reports are not automatically signed or persisted as mission evidence; submit them as a task artifact if a signed bundle is needed. The upstream MetaPen service is not connected.
+
+## Optional WebLLM setup
+
+Mirror an audited, self-contained WebLLM ESM bundle as `webllm.mjs`, the chosen model's JSON/weight files and its compatible WASM into a dedicated public model-assets directory. Set `SOVEREIGN_WEBLLM_ASSETS` to that directory and `SOVEREIGN_WEBLLM_CONFIG` to a private JSON config file containing `{model_id,model:"/local-model/weights/",model_lib:"/local-model/model.wasm"}`. The console loads it only on a user click. The adapter validates same-origin paths; CSP blocks external connections and scripts. Audit nested model/tokenizer manifests for external references; browser policy will reject them rather than fall back.
+
+The mirror is served without operator authentication so browser module/model requests do not receive the operator token. It must contain **only redistributable public model assets**, never private files, source repositories or runtime state. Symlink escapes are blocked. Use a loopback secure context with a WebGPU-capable browser. No model weights are bundled, downloaded or tested in this change. Browser inference ends when its tab closes; the background worker is independent. Documentation: https://webllm.mlc.ai/docs/user/basic_usage.html
+
+## Audit follow-up
+
+See `AUDIT.md` for exact checks and remaining qualification gaps. Legacy full-repository lint debt remains visible; the new Sovereign code has a strict zero-warning lint gate. Neither a signed receipt nor a local static review is labeled a zkVM execution proof.

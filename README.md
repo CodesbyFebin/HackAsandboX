@@ -10,7 +10,7 @@ A futuristic builder launchpad, 17 attributed MLH sponsor categories, developer 
 
 The new [Sovereign OS service](sovereign/README.md) adds a self-hosted mission console, durable SQLite queue, worker leases, payload-bound approval and Ed25519 evidence verification. It requires Node 24 and no external AI account. Start with `node --test sovereign/tests/*.test.mjs`.
 
-This is an experimental control-plane slice. Coding execution requires a configured worker; MeTaBos, MetaPen, WebLLM and STARK proving remain planned integrations. No entire-agent zkVM proof or production qualification is claimed. The existing hackathon portal and workbench remain available below.
+This is an experimental control-plane slice with an offline repository-test worker, local invoice/stock ledger, owned-source review and optional WebLLM adapter. Operators supply a rootless Docker host and mirrored browser model assets. Upstream MeTaBoss/MetaPen services, autonomous coding and STARK proving remain unconnected. See the [audit and remaining work](sovereign/AUDIT.md). No entire-agent zkVM proof or production qualification is claimed. The existing hackathon portal and workbench remain available below.
 
 ## What's included
 
