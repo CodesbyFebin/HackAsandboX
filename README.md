@@ -1,10 +1,16 @@
-# Hackasandbox
+# HackaSandbox Sovereign OS
 
-**Find a challenge. Bring your repository. Build something useful.**
+**Your infrastructure. Private AI. Isolated execution. Verifiable outcomes.**
 
 A futuristic builder launchpad, 17 attributed MLH sponsor categories, developer feeds, browser-local tools and a self-hosted participant workbench by [CodesbyFebin](https://github.com/CodesbyFebin).
 
 [Public website](https://codesbyfebin.github.io/HackAsandboX/) · [Documentation Wiki](https://github.com/CodesbyFebin/HackAsandboX/wiki) · [Security](SECURITY.md) · [Contributing](CONTRIBUTING.md)
+
+## Sovereign OS control service
+
+The new [Sovereign OS service](sovereign/README.md) adds a self-hosted mission console, durable SQLite queue, worker leases, payload-bound approval and Ed25519 evidence verification. It requires Node 24 and no external AI account. Start with `node --test sovereign/tests/*.test.mjs`.
+
+This is an experimental control-plane slice. Coding execution requires a configured worker; MeTaBos, MetaPen, WebLLM and STARK proving remain planned integrations. No entire-agent zkVM proof or production qualification is claimed. The existing hackathon portal and workbench remain available below.
 
 ## What's included
 

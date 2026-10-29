@@ -19,6 +19,7 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '24'
+      - run: node --test sovereign/tests/*.test.mjs
       - run: node --test tests/portal.test.mjs tests/sponsors.test.mjs
       - run: node scripts/build-pages.mjs
       - run: node scripts/check-pages.mjs
