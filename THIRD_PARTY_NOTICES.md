@@ -131,3 +131,7 @@ Commit: `42390afa0212e1d522b9658bc824016308675b7c`
 License: CC-BY-NC-4.0
 
 CC-BY-NC-4.0: noncommercial restriction. Source reference only; not bundled.
+
+## Vendored stylesheet
+
+The retained stylesheet and MIT notice are inventoried in [vendor/manifest.json](vendor/manifest.json), with reviewed upstream commit/path/blob evidence in [vendor/SOURCES.json](vendor/SOURCES.json). CI checks all vendor file bytes; see [provenance process](docs/wiki/Provenance.md).

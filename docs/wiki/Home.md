@@ -41,3 +41,7 @@ The public portal provides semantic HTML, distinct titles/descriptions, canonica
 ## Contribute
 
 Read `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SUPPORT.md` and `SECURITY.md`. Submit focused changes with observed test evidence. No purchased stars, automated fake engagement or spam link schemes.
+
+## Engineering evidence
+
+[ASVS gap map](AUDIT.md) · [Third-party provenance](Provenance.md) · [Feed source contracts](Feeds.md) · [Proof boundary](../../sovereign/zkvm/README.md)

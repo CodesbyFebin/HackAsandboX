@@ -1,0 +1,14 @@
+{
+  "schema": "hackasandbox.vendor-sources.v1",
+  "entries": [{
+    "path": "shadcn-tailwind-4.13.0.css",
+    "source": "https://github.com/shadcn-ui/ui",
+    "commitSha": "d0fae528221011f75a8c64a917073904c2847493",
+    "license": "MIT",
+    "evidence": "shadcn-tailwind-4.13.0.LICENSE.md",
+    "files": [
+      { "path": "shadcn-tailwind-4.13.0.css", "upstreamPath": "packages/shadcn/src/tailwind.css", "gitBlobSha": "7807c58eb94de8b764b9b6b7b5d8cde6d012b17f" },
+      { "path": "shadcn-tailwind-4.13.0.LICENSE.md", "upstreamPath": "LICENSE.md", "gitBlobSha": "fad4d887a681dd49233e5ed01ee2c7a1513089a0" }
+    ]
+  }]
+}

@@ -50,3 +50,7 @@ The private inference route and agent-mode queue/worker/harness are now code-int
 ## Builder studio qualification
 
 The release adds original builder UI code, versioned workspace storage, bounded local-model chat, explicit proposed-file apply/discard and network-restricted capability previews. New regression tests cover stale writes/proposals, file traversal, credential paths, model failures, role enforcement, preview headers and verify-only routing. Optional payment verification is loopback-only, allowlisted, bounded and contains no settlement implementation. No supplied runtime databases, environment secrets or Git metadata were imported. Live browser/WebGPU/AI/Docker/chain qualification remains pending; reference assets are not evidence of a working deployed capability.
+
+## Provenance and ASVS follow-up
+
+See [the versioned ASVS 5.0.0 gap map](../docs/wiki/AUDIT.md). The current expanded suite has 100 JS/TS tests, including 42 Sovereign tests. Vendor checks now bind retained license/source bytes to reviewed upstream commits and fail CI on unrecorded additions. This is scoped inventory coverage, not a complete licensing clearance. The Jolt adapter stores opaque bytes only; no prover/verifier, PQC or containment proof is integrated.

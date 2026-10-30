@@ -12,7 +12,20 @@ A futuristic builder launchpad, 17 attributed MLH sponsor categories, developer 
 
 The new [Sovereign OS service](sovereign/README.md) adds a self-hosted builder studio, mission console, durable SQLite queue, worker leases, payload-bound approval and Ed25519 evidence verification. The builder includes persisted source editing, private-model chat, reviewed file proposals and isolated HTML previews. It requires Node 24 and no external AI account. Start with `node --test sovereign/tests/*.test.mjs`.
 
-This is an experimental control-plane slice with an offline repository-test worker, local invoice/stock ledger, owned-source review and optional WebLLM adapter. Operators supply a rootless Docker host and mirrored browser model assets. Upstream MeTaBoss/MetaPen services, autonomous coding and STARK proving remain unconnected. See the [audit and remaining work](sovereign/AUDIT.md). No entire-agent zkVM proof or production qualification is claimed. The existing hackathon portal and workbench remain available below.
+This is an experimental control-plane slice with an offline repository-test worker, local invoice/stock ledger, owned-source review and optional WebLLM adapter. Operators supply a rootless Docker host and mirrored browser model assets. Upstream MeTaBoss/MetaPen services and STARK proving remain unconnected. Agent-mode coding has a networkless OpenCode/local-model harness, but its operator-supplied image and model still need live qualification. See the [audit and remaining work](sovereign/AUDIT.md). No entire-agent zkVM proof or production qualification is claimed. The existing hackathon portal and workbench remain available below.
+
+## Tested evidence and proof boundaries
+
+The original 92-test release included **39 Sovereign tests**, not just portal checks. The expanded suite now has **100 JS/TS tests**, including **42 Sovereign tests** covering queue persistence, lease expiry/fencing, approval replay rejection, Ed25519 wrong-key/tamper detection, actual artifact bytes, workspace revisions and opaque artifact transport. Run the exact CI command:
+
+```sh
+node --experimental-strip-types --test tests/*.test.mjs sovereign/tests/*.test.mjs
+node scripts/vendor-manifest.mjs --check
+```
+
+Ed25519 receipts verify signed evidence; they do not prove containment. Zero-knowledge execution, post-quantum signatures and no-exfiltration proofs remain research work. The [Jolt artifact boundary](sovereign/zkvm/README.md) is explicitly unverified transport, not native proof interoperability. No compliance certification, model-provider retention agreement or competitive exclusivity is claimed.
+
+[ASVS 5.0.0 gap mapping](docs/wiki/AUDIT.md) · [Vendor provenance](docs/wiki/Provenance.md) · [Feed source contracts](docs/wiki/Feeds.md)
 
 ## What's included
 

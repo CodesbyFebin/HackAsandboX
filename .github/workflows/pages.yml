@@ -20,6 +20,7 @@ jobs:
         with:
           node-version: '24'
       - run: npx --yes pnpm@11.25.0 install --frozen-lockfile --ignore-scripts
+      - run: node scripts/vendor-manifest.mjs --check
       - run: node --experimental-strip-types --test tests/*.test.mjs sovereign/tests/*.test.mjs
       - run: node_modules/.bin/tsc --noEmit
       - run: node_modules/.bin/eslint sovereign --max-warnings 0
