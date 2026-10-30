@@ -20,9 +20,11 @@ export function validateTask(x) {
   requireThat(text(x.repository, 200) && /^[a-zA-Z0-9_-][a-zA-Z0-9_.-]*\/[a-zA-Z0-9_-][a-zA-Z0-9_.-]*$/.test(x.repository), 'Use owner/repository identity');
   requireThat(Number.isSafeInteger(x.budgetSeconds) && x.budgetSeconds >= 1 && x.budgetSeconds <= 3600, 'Budget must be 1–3600 seconds');
   requireThat(Array.isArray(x.capabilities) && x.capabilities.length >= 1 && x.capabilities.length <= 4 && new Set(x.capabilities).size === x.capabilities.length && x.capabilities.every(v => ['read', 'edit', 'test', 'local-security-check'].includes(v)), 'Unsupported capability');
+  requireThat(x.execution===undefined||['test','agent'].includes(x.execution),'Unknown execution mode');
+  requireThat(x.execution!=='agent'||(x.module==='coding'&&['read','edit','test'].every(c=>x.capabilities.includes(c))&&x.budgetSeconds>=30),'Agent tasks require coding read/edit/test and at least 30 seconds');
   requireThat(x.network === 'deny', 'This release supports network-deny workspaces only');
   requireThat(x.module !== 'security' || text(x.authorization, 2000), 'Security tasks require an authorization statement');
-  return Object.fromEntries(['project','prompt','module','repository','commit','budgetSeconds','capabilities','network','authorization'].filter(k => x[k] !== undefined).map(k => [k,x[k]]));
+  return Object.fromEntries(['project','prompt','module','repository','commit','budgetSeconds','capabilities','network','authorization','execution'].filter(k => x[k] !== undefined).map(k => [k,x[k]]));
 }
 export function verifyReceipt(receipt, trustedKey) {
   try {
@@ -72,11 +74,12 @@ export class Control {
       this.db.prepare("UPDATE tasks SET state='failed',lease=NULL,leaseUntil=NULL WHERE id=?").run(r.id);this.event(r.id,'expired');
     }
   }
-  claim(modules = ['coding','business','security']) {
+  claim(modules = ['coding','business','security'], modes = ['test','agent']) {
     requireThat(Array.isArray(modules)&&modules.length>0&&modules.every(m=>['coding','business','security'].includes(m)),'Supported worker modules required');
+    requireThat(Array.isArray(modes)&&modes.length>0&&modes.every(m=>['test','agent'].includes(m)),'Supported execution modes required');
     return this.transaction(()=>{this.expire();
     requireThat(this.db.prepare("SELECT count(*) AS n FROM tasks WHERE state='running'").get().n<this.maxActive,'Worker slots full',429);
-    const r=this.db.prepare("SELECT * FROM tasks WHERE state='queued' ORDER BY created,id").all().find(r=>modules.includes(JSON.parse(r.spec).module));if(!r)return null;
+    const r=this.db.prepare("SELECT * FROM tasks WHERE state='queued' ORDER BY created,id").all().find(r=>modules.includes(JSON.parse(r.spec).module)&&modes.includes(JSON.parse(r.spec).execution??'test'));if(!r)return null;
     const lease=randomUUID(),until=Math.min(r.deadline,this.now()+60000);
     this.db.prepare("UPDATE tasks SET state='running',lease=?,leaseUntil=? WHERE id=?").run(lease,until,r.id);this.event(r.id,'claimed');return {...this.get(r.id),lease};});}
   lease(id,lease) {const r=this.row(id);requireThat(r.state==='running'&&r.lease===lease&&r.leaseUntil>this.now()&&r.deadline>this.now(),'Lease invalid or expired',409);return r;}
