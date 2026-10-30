@@ -40,3 +40,13 @@ Scope: HackAsandboX PRs #1–#8 combined, including the Sovereign control servic
 | Frontend device QA | HTTP contracts and escaping use are tested/reviewed. No WebGPU browser device test or visual accessibility audit was available. |
 
 No 100/100 score, complete private agent autonomy or production-readiness claim is made. The remaining issues above require implementation and/or an actual operator runtime. Do not infer model privacy or hardware isolation from adapter configuration alone.
+
+
+## Source-release follow-up
+
+The private inference route and agent-mode queue/worker/harness are now code-integrated. Agent mode runs an operator-supplied OpenCode + CPU llama.cpp image inside a networkless container and returns a patch and tests; inference, image and GGUF runtime qualification are still pending. The independent console has an init/doctor/start/worker manager and reviewable user-service files. Source packaging now exports committed objects with per-file digests and rejects runtime/credential paths. See `RELEASE.md` for exact prerequisites and boundaries. The earlier 81-test count describes the audited foundation; current CI reports the expanded release suite.
+
+
+## Builder studio qualification
+
+The release adds original builder UI code, versioned workspace storage, bounded local-model chat, explicit proposed-file apply/discard and network-restricted capability previews. New regression tests cover stale writes/proposals, file traversal, credential paths, model failures, role enforcement, preview headers and verify-only routing. Optional payment verification is loopback-only, allowlisted, bounded and contains no settlement implementation. No supplied runtime databases, environment secrets or Git metadata were imported. Live browser/WebGPU/AI/Docker/chain qualification remains pending; reference assets are not evidence of a working deployed capability.

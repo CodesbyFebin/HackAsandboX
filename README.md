@@ -6,9 +6,11 @@ A futuristic builder launchpad, 17 attributed MLH sponsor categories, developer 
 
 [Public website](https://codesbyfebin.github.io/HackAsandboX/) · [Documentation Wiki](https://github.com/CodesbyFebin/HackAsandboX/wiki) · [Security](SECURITY.md) · [Contributing](CONTRIBUTING.md)
 
+[Full source release and quick start](RELEASE.md)
+
 ## Sovereign OS control service
 
-The new [Sovereign OS service](sovereign/README.md) adds a self-hosted mission console, durable SQLite queue, worker leases, payload-bound approval and Ed25519 evidence verification. It requires Node 24 and no external AI account. Start with `node --test sovereign/tests/*.test.mjs`.
+The new [Sovereign OS service](sovereign/README.md) adds a self-hosted builder studio, mission console, durable SQLite queue, worker leases, payload-bound approval and Ed25519 evidence verification. The builder includes persisted source editing, private-model chat, reviewed file proposals and isolated HTML previews. It requires Node 24 and no external AI account. Start with `node --test sovereign/tests/*.test.mjs`.
 
 This is an experimental control-plane slice with an offline repository-test worker, local invoice/stock ledger, owned-source review and optional WebLLM adapter. Operators supply a rootless Docker host and mirrored browser model assets. Upstream MeTaBoss/MetaPen services, autonomous coding and STARK proving remain unconnected. See the [audit and remaining work](sovereign/AUDIT.md). No entire-agent zkVM proof or production qualification is claimed. The existing hackathon portal and workbench remain available below.
 

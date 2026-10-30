@@ -160,3 +160,8 @@ The mirror is served without operator authentication so browser module/model req
 ## Audit follow-up
 
 See `AUDIT.md` for exact checks and remaining qualification gaps. Legacy full-repository lint debt remains visible; the new Sovereign code has a strict zero-warning lint gate. Neither a signed receipt nor a local static review is labeled a zkVM execution proof.
+
+
+## Builder and verification release
+
+The independent `/builder` studio, workspace persistence, local-model chat and reviewed file proposals are implemented. Optional local payment verification is implemented without settlement. See root `RELEASE.md` for setup and the exact capabilities; upstream services and model/runtime qualification remain separate.

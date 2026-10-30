@@ -1,0 +1,2 @@
+import {Fault} from './core.mjs';
+export function previewDocument(files){if(typeof files['index.html']!=='string')throw new Fault(409,'No HTML entry point. Use your configured worker to test this service.');const style=files['style.css']??'',script=files['app.js']??'';return files['index.html'].replace(/<link\b[^>]*href=["']style\.css["'][^>]*>/gi,()=>'<style>'+style.replace(/<\/style/gi,'<\\/style')+'</style>').replace(/<script\b[^>]*src=["']app\.js["'][^>]*>\s*<\/script>/gi,()=>'<script>'+script.replace(/<\/script/gi,'<\\/script')+'</script>');}
